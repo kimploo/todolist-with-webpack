@@ -1,0 +1,29 @@
+html {
+  background-color: #36393f;
+  font-family: 'Noto Sans KR', sans-serif;
+}
+
+body {
+  margin: 0px;
+  background-color: #36393f;
+  color: rgb(220, 221, 222);
+}
+
+.app {
+  display: flex;
+  background: #36393f;
+}
+
+.menu {
+  background: #2f3136;
+  flex-grow: 1;
+  min-width: 60px;
+  max-width: 100px;
+  height: 100vh;
+}
+
+.body {
+  background: #36393f;
+  flex-grow: 10;
+  height: 100vh;
+}

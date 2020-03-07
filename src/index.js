@@ -1,1 +1,2 @@
-import App from "./js/components/App";
+// eslint-disable-next-line no-unused-vars
+import App from './js/App';
