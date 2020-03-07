@@ -5,13 +5,16 @@ import { Body } from './components/Body';
 import { Nav } from './components/Nav';
 import { Menu } from './components/Menu';
 
-export default class App extends React.Component {
+export default class App extends React.PureComponent {
   constructor(props) {
     super(props);
 
     this.state = {
       todos: [],
     };
+
+    this.addTodo = this.addTodo.bind(this);
+    this.removeTodo = this.removeTodo.bind(this);
   }
 
   componentDidMount() {
@@ -24,20 +27,26 @@ export default class App extends React.Component {
       });
   }
 
+  addTodo(todo) {
+    this.setState(prevState => {
+      [todo, ...prevState.todos];
+    });
+  }
+
+  removeTodo() {}
+
   render() {
     const { todos } = this.state;
     return (
-      <>
-        <div className="app">
-          <div className="menu">
-            <Menu />
-          </div>
-          <div className="body">
-            <Nav />
-            <Body todos={todos} />
-          </div>
+      <div className="app">
+        <div className="menu">
+          <Menu />
         </div>
-      </>
+        <div className="body">
+          <Nav />
+          <Body todos={todos} />
+        </div>
+      </div>
     );
   }
 }

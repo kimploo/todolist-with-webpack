@@ -1,4 +1,5 @@
 import React from 'react';
+import { Search } from '.';
 
 export default class Nav extends React.PureComponent {
   constructor(props) {
@@ -6,6 +7,11 @@ export default class Nav extends React.PureComponent {
   }
 
   render() {
-    return <>This is place for Nav</>;
+    return (
+      <>
+        <div>This is place for Nav</div>
+        <Search />
+      </>
+    );
   }
 }
