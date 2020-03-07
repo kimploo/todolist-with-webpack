@@ -4,12 +4,21 @@ import WriteTodo from './WriteTodo';
 
 export default class Body extends React.PureComponent {
   render() {
-    const { todos } = this.props;
+    const { todos, addTodo, removeTodo, addTag, removeTag } = this.props;
     return (
       <>
-        <WriteTodo />
-        {todos.map(todo => {
-          return <Todo todo={todo} index={todo.id} key={todo.id} />;
+        <WriteTodo addTodo={addTodo} />
+        {todos.map((todo, index) => {
+          return (
+            <Todo
+              todo={todo}
+              index={index}
+              key={todo.id}
+              removeTodo={removeTodo}
+              addTag={addTag}
+              remoteTag={removeTag}
+            />
+          );
         })}
       </>
     );

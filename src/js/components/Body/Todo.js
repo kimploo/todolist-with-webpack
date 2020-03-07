@@ -77,6 +77,7 @@ export default class Todo extends React.PureComponent {
 
   render() {
     const { completed, title, tags } = this.state;
+    const { index, removeTodo } = this.props;
     return (
       <>
         <DivTodo>
@@ -86,6 +87,7 @@ export default class Todo extends React.PureComponent {
             checked={completed}
           />
           {title}
+          <button onClick={removeTodo(index)}>X</button>
         </DivTodo>
         <Tags
           tags={tags}

@@ -15,6 +15,8 @@ export default class App extends React.PureComponent {
 
     this.addTodo = this.addTodo.bind(this);
     this.removeTodo = this.removeTodo.bind(this);
+    this.addTag = this.addTag.bind(this);
+    this.removeTag = this.removeTag.bind(this);
   }
 
   componentDidMount() {
@@ -27,13 +29,37 @@ export default class App extends React.PureComponent {
       });
   }
 
-  addTodo(todo) {
+  addTodo(title) {
+    const { todos } = this.state;
+    const todo = {
+      id: todos.length + 1,
+      title,
+      completed: false,
+      createdAt: new Date().toISOString(),
+      updatedAt: new Date().toISOString(),
+      UserId: 1,
+      tags: ['todo'],
+    };
     this.setState(prevState => {
-      [todo, ...prevState.todos];
+      return {
+        todos: [todo, ...prevState.todos],
+      };
     });
   }
 
-  removeTodo() {}
+  removeTodo(index) {
+    return function() {
+      const { todos } = this.state;
+      const filterTodo = todos.filter((value, i) => i !== index);
+      this.setState({
+        todos: filterTodo,
+      });
+    }.bind(this);
+  }
+
+  addTag(tagContents) {}
+
+  removeTag() {}
 
   render() {
     const { todos } = this.state;
@@ -44,7 +70,13 @@ export default class App extends React.PureComponent {
         </div>
         <div className="body">
           <Nav />
-          <Body todos={todos} />
+          <Body
+            todos={todos}
+            addTodo={this.addTodo}
+            removeTodo={this.removeTodo}
+            addTag={this.addTag}
+            removeTag={this.removeTag}
+          />
         </div>
       </div>
     );
