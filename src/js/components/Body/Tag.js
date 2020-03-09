@@ -1,17 +1,22 @@
 import React from 'react';
 
-export default function Tag({ tag, index, removeTag }) {
-  return (
-    <>
-      <div>{tag}</div>
-      <button
-        type="button"
-        onClick={() => {
-          removeTag(index);
-        }}
-      >
-        +
-      </button>
-    </>
-  );
+export default class Tag extends React.PureComponent {
+  constructor(props) {
+    super(props);
+    this.state = {
+      tag: '',
+    };
+  }
+
+  componentDidMount() {
+    const { tag } = this.props;
+    this.setState({
+      tag,
+    });
+  }
+
+  render() {
+    const { tag } = this.props;
+    return <div>{tag}</div>;
+  }
 }

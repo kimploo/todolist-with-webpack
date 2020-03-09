@@ -1,10 +1,19 @@
 import React from 'react';
+import shortid from 'shortid';
+
 import Todo from './Todo';
 import WriteTodo from './WriteTodo';
 
 export default class Body extends React.PureComponent {
   render() {
-    const { todos, addTodo, removeTodo, addTag, removeTag } = this.props;
+    const {
+      todos,
+      addTodo,
+      removeTodo,
+      addTag,
+      removeTag,
+      handleInputKeyDown,
+    } = this.props;
     return (
       <>
         <WriteTodo addTodo={addTodo} />
@@ -12,11 +21,12 @@ export default class Body extends React.PureComponent {
           return (
             <Todo
               todo={todo}
-              index={index}
-              key={todo.id}
+              todoIndex={index}
+              key={shortid.generate()}
               removeTodo={removeTodo}
               addTag={addTag}
-              remoteTag={removeTag}
+              removeTag={removeTag}
+              handleInputKeyDown={handleInputKeyDown}
             />
           );
         })}

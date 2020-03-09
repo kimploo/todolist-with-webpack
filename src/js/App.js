@@ -17,6 +17,8 @@ export default class App extends React.PureComponent {
     this.removeTodo = this.removeTodo.bind(this);
     this.addTag = this.addTag.bind(this);
     this.removeTag = this.removeTag.bind(this);
+    this.inputKeyDown = this.inputKeyDown.bind(this);
+    this.handleInputKeyDown = this.handleInputKeyDown.bind(this);
   }
 
   componentDidMount() {
@@ -50,16 +52,63 @@ export default class App extends React.PureComponent {
   removeTodo(index) {
     return function() {
       const { todos } = this.state;
-      const filterTodo = todos.filter((value, i) => i !== index);
       this.setState({
-        todos: filterTodo,
+        todos: todos.filter((value, i) => i !== index),
       });
     }.bind(this);
   }
 
-  addTag(tagContents) {}
+  removeTag(tag, todoIndex) {
+    return function() {
+      const { todos } = this.state;
+      const newTodo = {
+        ...todos[todoIndex],
+        tags: todos[todoIndex].tags.filter(t => t !== tag),
+      };
+      const newTodos = todos.filter((value, i) => i !== todoIndex);
+      newTodos.splice(todoIndex, 0, newTodo);
+      this.setState({
+        todos: newTodos,
+      });
+    }.bind(this);
+  }
 
-  removeTag() {}
+  handleInputKeyDown(event, tagInput, todoIndex) {
+    this.inputKeyDown(event, tagInput, todoIndex);
+  }
+
+  inputKeyDown(e, tagInput, todoIndex) {
+    const { value } = e.target;
+    const { todos } = this.state;
+    console.log(e, 'event worked');
+    if (e.key === 'Enter' && value) {
+      if (
+        todos[todoIndex].tags.find(
+          tag => tag.toLowerCase() === value.toLowerCase()
+        )
+      ) {
+        return undefined;
+      }
+      const newTodo = {
+        ...todos[todoIndex],
+        tags: [value, ...todos[todoIndex].tags],
+      };
+      const newTodos = todos.filter((value, i) => i !== todoIndex);
+      newTodos.splice(todoIndex, 0, newTodo);
+      this.setState({
+        todos: newTodos,
+      });
+      tagInput.value = null;
+      console.log(e, 'enter worked');
+      // this.setState({ tags: [...tags, value] }); // here should be add tag
+      // tagInput.value = null;
+    }
+    // else if (e.key === 'Backspace' && !value) {
+    //   this.removeTag(tags.length - 1);
+    // }
+  }
+
+  addTag(tagContents) {}
 
   render() {
     const { todos } = this.state;
@@ -74,7 +123,7 @@ export default class App extends React.PureComponent {
             todos={todos}
             addTodo={this.addTodo}
             removeTodo={this.removeTodo}
-            addTag={this.addTag}
+            handleInputKeyDown={this.handleInputKeyDown}
             removeTag={this.removeTag}
           />
         </div>
